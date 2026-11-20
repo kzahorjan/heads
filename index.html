@@ -24,8 +24,8 @@ html,body{background:#fff;color:#171717}
 @media(max-width:650px){.mobile-preview .cloud{width:1400px;min-width:1400px;height:100%;min-height:0}}
 
 /* Seamless horizontal conveyor in both modes; mobile retains vertical touch scrolling. */
-/* Horizontal touch is controlled with a soft momentum curve; vertical page gestures remain native. */
-.mobile-preview .stage{touch-action:pan-y;scroll-behavior:auto}
+/* Native horizontal swiping; vertical page gestures remain native. */
+.mobile-preview .stage{touch-action:pan-x pan-y;scroll-behavior:auto;-webkit-tap-highlight-color:transparent}
 /* Center the phone preview on real narrow screens and avoid viewport-width overflow. */
 .mobile-preview .preview-wrap{display:flex;justify-content:center;align-items:flex-start;width:100%;min-width:0;box-sizing:border-box}
 .mobile-preview .stage{flex:0 1 375px;width:375px;max-width:100%;min-width:0;margin-inline:auto}
@@ -35,6 +35,11 @@ html,body{background:#fff;color:#171717}
  .mobile-preview .stage{width:100%;max-width:375px;margin-inline:auto}
  .top{align-items:center}
 }
+.person,.stage{-webkit-tap-highlight-color:transparent}
+
+/* Mobile: horizontal gesture belongs to the preview, not individual heads. */
+.mobile-preview .stage{touch-action:pan-y;overscroll-behavior-x:contain}
+.mobile-preview .person{touch-action:pan-y}
 </style></head><body><main class="shell"><div class="top"><div class="mode-switch" role="group" aria-label="Režim náhľadu"><button type="button" class="mode active" data-mode="desktop" aria-pressed="true">Desktop</button><button type="button" class="mode" data-mode="mobile" aria-pressed="false">Mobil</button></div></div><div class="preview-wrap"><section class="stage" id="stage" aria-label="Interaktívna mapa tímu" tabindex="0"><div class="cloud" id="cloud"></div></section></div><p class="scroll-tip" id="scrollTip">Posúvaj obsah horizontálne ← → · hlavy sa automaticky pohybujú horizontálne</p><div class="settings"><label class="setting">Počet <input id="count" type="range" min="24" max="120" value="84"><output id="countValue"></output></label><label class="setting">Offset <input id="offset" type="range" min="0" max="150" value="78"><output id="offsetValue"></output></label><label class="setting">Pohyb <input id="motion" type="range" min="0" max="100" step="5" value="20"><output id="motionValue">20%</output></label><button id="shuffle" type="button">Premiešať rozloženie ↻</button></div><p class="foot">Desktop aj mobil: nekonečný horizontálny pohyb · Mobil: manuálny horizontálny scroll</p></main><script>
 const stage=document.querySelector('#stage'),cloud=document.querySelector('#cloud'),shell=document.querySelector('.shell');const count=document.querySelector('#count'),offset=document.querySelector('#offset');const names=['Alex Novák','Sofia Kováčová','Martin Polák','Emma Horváthová','Oliver Urban','Nina Králová','Adam Benko','Laura Šimková','Jakub Varga','Mia Balážová','Tomáš Kováč','Ema Farkašová'];const roles=['Product Designer','UX Researcher','Design Lead','Frontend Developer','Strategist','Art Director'];const tones=['#a9a9a9','#b5b5b5','#c1c1c1','#999999','#adadad','#c9c9c9','#a3a3a3'];let seed=17,lastWidth=0,lastHeight=0;const motion=document.querySelector('#motion');let autoScrollFrame=0,lastTick=0,scrollPauseUntil=0,desktopTravel=0,desktopItems=[];function random(i,s){const v=Math.sin(i*127.1+s*311.7)*43758.5453;return v-Math.floor(v)}function draw(){
  const w=cloud.clientWidth,h=cloud.clientHeight;if(!w||!h)return;
@@ -144,50 +149,42 @@ function autoScroll(t){
  }
  autoScrollFrame=requestAnimationFrame(autoScroll);
 }
-// Mobile touch: horizontal drag with inertia and gradual damping.
-// A vertical gesture is left to the browser to scroll the page normally.
-let drag=null, glideFrame=0, blockClickUntil=0;
-function stopGlide(){if(glideFrame){cancelAnimationFrame(glideFrame);glideFrame=0;}}
-function startGlide(velocity){
- stopGlide();let previous=performance.now();
- const step=now=>{
-  const dt=Math.min(40,now-previous);previous=now;
-  const before=stage.scrollLeft;
-  stage.scrollLeft+=velocity*dt;
-  velocity*=Math.exp(-dt/340); // damping: ~340ms decay time
-  if(Math.abs(velocity)>.012 && stage.scrollLeft!==before)glideFrame=requestAnimationFrame(step);
-  else glideFrame=0;
- };
- if(Math.abs(velocity)>.012)glideFrame=requestAnimationFrame(step);
-}
-stage.addEventListener('touchstart',e=>{
- if(!shell.classList.contains('mobile-preview')||e.touches.length!==1)return;
- stopGlide();const t=e.touches[0];
- drag={x:t.clientX,y:t.clientY,lastX:t.clientX,lastT:performance.now(),velocity:0,axis:null,moved:false};
+// Direct horizontal finger dragging: no easing, inertia, or touch visualization.
+// Vertical gestures are left to the browser for normal page scrolling.
+let drag=null, suppressTapUntil=0;
+stage.addEventListener('pointerdown',e=>{
+ if(!shell.classList.contains('mobile-preview') || e.pointerType!=='touch')return;
+ drag={id:e.pointerId,x:e.clientX,y:e.clientY,scroll:stage.scrollLeft,active:false,vertical:false};
+}, {passive:true});
+stage.addEventListener('pointermove',e=>{
+ if(!drag || e.pointerId!==drag.id)return;
+ const dx=e.clientX-drag.x,dy=e.clientY-drag.y;
+ if(!drag.active && !drag.vertical && Math.hypot(dx,dy)>7){
+  if(Math.abs(dx)>Math.abs(dy)*1.15){
+   drag.active=true;
+   stage.setPointerCapture(e.pointerId);
+  }else drag.vertical=true;
+ }
+ if(drag.active){
+  stage.scrollLeft=drag.scroll-dx;
+  suppressTapUntil=performance.now()+350;
+ }
 },{passive:true});
-stage.addEventListener('touchmove',e=>{
- if(!drag||!shell.classList.contains('mobile-preview')||e.touches.length!==1)return;
- const t=e.touches[0],dx=t.clientX-drag.x,dy=t.clientY-drag.y;
- if(!drag.axis && Math.hypot(dx,dy)>7)drag.axis=Math.abs(dx)>Math.abs(dy)*1.1?'x':'y';
- if(drag.axis!=='x')return;
- e.preventDefault();drag.moved=true;
- const now=performance.now(),dt=Math.max(1,now-drag.lastT);
- const delta=t.clientX-drag.lastX;
- stage.scrollLeft-=delta;
- const instant=-delta/dt;
- drag.velocity=drag.velocity*.55+instant*.45;
- drag.lastX=t.clientX;drag.lastT=now;
-},{passive:false});
-function finishDrag(){
- if(!drag)return;
- if(drag.moved){blockClickUntil=performance.now()+400;startGlide(drag.velocity*.9);}
- drag=null;
+function endDrag(e){
+ if(drag && e.pointerId===drag.id){
+  if(drag.active)suppressTapUntil=performance.now()+350;
+  drag=null;
+ }
 }
-stage.addEventListener('touchend',finishDrag,{passive:true});
-stage.addEventListener('touchcancel',()=>{drag=null;stopGlide();},{passive:true});
+stage.addEventListener('pointerup',endDrag);
+stage.addEventListener('pointercancel',endDrag);
 stage.addEventListener('click',e=>{
- if(performance.now()<blockClickUntil){e.preventDefault();e.stopImmediatePropagation();}
+ if(shell.classList.contains('mobile-preview') && performance.now()<suppressTapUntil){
+  e.preventDefault();e.stopPropagation();
+ }
 },true);
+// Native browser scrolling: no custom drag inertia or touch overlays.
+// The browser handles horizontal swipes and their normal platform behavior.
 // Manual scrolling never stops the ambient horizontal drift.
 
 motion.addEventListener('input',applyMotion);applyMotion();requestAnimationFrame(autoScroll);
