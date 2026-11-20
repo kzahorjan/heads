@@ -1,5 +1,5 @@
 <!doctype html><html lang="sk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LB — People constellation v14</title><style>
-:root{font-family:Inter,Arial,Helvetica,sans-serif;color:#171717;background:#fff}*{box-sizing:border-box}body{margin:0}.shell{max-width:1440px;margin:0 auto;padding:28px 28px 45px}.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px;gap:20px}.eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700}.hint{font-size:12px;color:#777}.stage{width:100%;aspect-ratio:1339/483;min-height:276px;background:#e9e9e7;position:relative;overflow:hidden;border-radius:2px}.cloud{position:relative;width:100%;height:100%}.person{position:absolute;left:0;top:0;width:var(--d);height:var(--d);border:0;padding:0;border-radius:50%;background:transparent;cursor:pointer;z-index:1;transform:translate(var(--x),var(--y));outline-offset:5px;transition:opacity 360ms ease}.head{position:absolute;inset:0;border-radius:50%;background:var(--shade);transform:scale(1);transition:transform 600ms cubic-bezier(.19,1,.22,1),box-shadow 450ms ease;box-shadow:inset 0 0 0 1px #0000000b}.person:is(:hover,:focus-visible){z-index:50}.cloud:has(.person:is(:hover,:focus-visible)) .person:not(:is(:hover,:focus-visible)){opacity:.2}.person:is(:hover,:focus-visible) .head{transform:scale(var(--zoom));box-shadow:0 14px 35px #00000022}.label{position:absolute;top:calc(100% + var(--label-clearance, 40px));left:50%;transform:translate(-50%,-8px);white-space:nowrap;text-align:center;opacity:0;pointer-events:none;transition:opacity 250ms ease,transform 400ms cubic-bezier(.2,1,.3,1);color:#141414;text-shadow:0 1px 3px #e9e9e7}.label strong{display:block;font-size:14px;font-weight:650;letter-spacing:-.025em}.label small{display:block;font-size:11px;color:#555;margin-top:4px}.person:is(:hover,:focus-visible) .label{opacity:1;transform:translate(-50%,0)}.settings{display:flex;flex-wrap:wrap;align-items:center;gap:22px;margin-top:20px;padding-top:18px;border-top:1px solid #e6e6e6}.setting{display:flex;align-items:center;gap:9px;font-size:12px;color:#555}.setting input{width:100px;accent-color:#222}.setting output{font-size:11px;min-width:32px;color:#171717;font-variant-numeric:tabular-nums}.settings button{font:inherit;font-size:12px;border:1px solid #ddd;background:#fff;padding:9px 13px;cursor:pointer;border-radius:3px}.settings button:hover{background:#f4f4f4}.foot{font-size:11px;color:#999;margin:14px 0 0}@media(max-width:650px){.shell{padding:15px}.stage{min-height:368px;aspect-ratio:4/4.83}.settings{gap:12px}.setting input{width:75px}.hint{display:none}.label strong{font-size:12px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition-duration:.01ms!important}}
+:root{font-family:Inter,Arial,Helvetica,sans-serif;color:#171717;background:#fff}*{box-sizing:border-box}body{margin:0}.shell{max-width:1440px;margin:0 auto;padding:28px 28px 45px}.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px;gap:20px}.eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700}.hint{font-size:12px;color:#777}.stage{width:100%;aspect-ratio:1339/483;min-height:276px;background:#e9e9e7;position:relative;overflow:hidden;border-radius:2px}.cloud{position:relative;width:100%;height:100%}.person{position:absolute;left:0;top:0;width:var(--d);height:var(--d);border:0;padding:0;border-radius:50%;background:transparent;cursor:pointer;z-index:1;transform:translate(var(--x),var(--y));outline-offset:5px;transition:opacity 360ms ease}.head{position:absolute;inset:0;border-radius:50%;background:var(--shade);transform:scale(var(--center-scale,1));transition:transform 600ms cubic-bezier(.19,1,.22,1),box-shadow 450ms ease;box-shadow:inset 0 0 0 1px #0000000b}.person:is(:hover,:focus-visible){z-index:50}.cloud:has(.person:is(:hover,:focus-visible)) .person:not(:is(:hover,:focus-visible)){opacity:.2}.person:is(:hover,:focus-visible) .head{transform:scale(calc(var(--zoom) * var(--center-scale,1)));box-shadow:0 14px 35px #00000022}.label{position:absolute;top:calc(100% + var(--label-clearance, 40px));left:50%;transform:translate(-50%,-8px);white-space:nowrap;text-align:center;opacity:0;pointer-events:none;transition:opacity 250ms ease,transform 400ms cubic-bezier(.2,1,.3,1);color:#141414;text-shadow:0 1px 3px #e9e9e7}.label strong{display:block;font-size:14px;font-weight:650;letter-spacing:-.025em}.label small{display:block;font-size:11px;color:#555;margin-top:4px}.person:is(:hover,:focus-visible) .label{opacity:1;transform:translate(-50%,0)}.settings{display:flex;flex-wrap:wrap;align-items:center;gap:22px;margin-top:20px;padding-top:18px;border-top:1px solid #e6e6e6}.setting{display:flex;align-items:center;gap:9px;font-size:12px;color:#555}.setting input{width:100px;accent-color:#222}.setting output{font-size:11px;min-width:32px;color:#171717;font-variant-numeric:tabular-nums}.settings button{font:inherit;font-size:12px;border:1px solid #ddd;background:#fff;padding:9px 13px;cursor:pointer;border-radius:3px}.settings button:hover{background:#f4f4f4}.foot{font-size:11px;color:#999;margin:14px 0 0}@media(max-width:650px){.shell{padding:15px}.stage{min-height:368px;aspect-ratio:4/4.83}.settings{gap:12px}.setting input{width:75px}.hint{display:none}.label strong{font-size:12px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition-duration:.01ms!important}}
 
 /* Refined grayscale controls and constrained mobile viewport */
 .top{margin-bottom:18px}.mode-switch{display:inline-flex;padding:3px;border:1px solid #bdbdbd;background:#f2f2f2;border-radius:7px;gap:3px}.mode{font:600 12px Inter,Arial,sans-serif;color:#444;background:transparent;border:0;border-radius:5px;padding:9px 17px;cursor:pointer}.mode.active{background:#202020;color:#fff;box-shadow:0 1px 3px #0002}.mode:focus-visible,.settings button:focus-visible{outline:2px solid #111;outline-offset:2px}.stage{background:#ededed}.head{box-shadow:none}.person:is(:hover,:focus-visible) .head{box-shadow:0 9px 25px #00000025}.settings{gap:14px 22px;border-top:1px solid #c7c7c7}.setting{color:#222;font-weight:600}.setting input{accent-color:#111;cursor:pointer}.setting output{font-weight:700;color:#111}.settings button{border:1px solid #555;color:#111;font-weight:650;background:#fff;padding:10px 15px}.settings button:hover{background:#e9e9e9}.foot{color:#555}.scroll-tip{display:none;font-size:12px;color:#4b4b4b;margin:9px 0 0}.preview-wrap{width:100%}.mobile-preview .preview-wrap{display:flex;justify-content:center;padding:24px 0;background:#f6f6f6;border:1px solid #dedede}.mobile-preview .stage{width:375px;max-width:calc(100vw - 70px);height:620px;min-height:0;aspect-ratio:auto;overflow:auto;overscroll-behavior:contain;touch-action:pan-x pan-y;border:1px solid #bdbdbd;border-radius:12px;scrollbar-width:thin;scrollbar-color:#888 #e3e3e3}.mobile-preview .cloud{width:820px;height:1080px;min-width:820px;min-height:1080px}.mobile-preview .scroll-tip{display:block}.mobile-preview .stage::-webkit-scrollbar{width:8px;height:8px}.mobile-preview .stage::-webkit-scrollbar-thumb{background:#888;border-radius:8px}.mobile-preview .stage::-webkit-scrollbar-track{background:#ddd}@media(max-width:650px){.top{align-items:flex-start;flex-direction:column;gap:12px}.mobile-preview .preview-wrap{padding:14px 0}.mobile-preview .stage{height:560px}.mobile-preview .cloud{width:760px;height:1050px;min-width:760px;min-height:1050px}.settings{gap:16px}.setting{min-width:130px;justify-content:space-between}.setting input{width:90px}}
@@ -24,6 +24,17 @@ html,body{background:#fff;color:#171717}
 @media(max-width:650px){.mobile-preview .cloud{width:1400px;min-width:1400px;height:100%;min-height:0}}
 
 /* Seamless horizontal conveyor in both modes; mobile retains vertical touch scrolling. */
+/* Horizontal touch is controlled with a soft momentum curve; vertical page gestures remain native. */
+.mobile-preview .stage{touch-action:pan-y;scroll-behavior:auto}
+/* Center the phone preview on real narrow screens and avoid viewport-width overflow. */
+.mobile-preview .preview-wrap{display:flex;justify-content:center;align-items:flex-start;width:100%;min-width:0;box-sizing:border-box}
+.mobile-preview .stage{flex:0 1 375px;width:375px;max-width:100%;min-width:0;margin-inline:auto}
+@media(max-width:650px){
+ .shell{width:100%;max-width:100%;padding-inline:15px;overflow-x:clip}
+ .mobile-preview .preview-wrap{padding:14px 10px}
+ .mobile-preview .stage{width:100%;max-width:375px;margin-inline:auto}
+ .top{align-items:center}
+}
 </style></head><body><main class="shell"><div class="top"><div class="mode-switch" role="group" aria-label="Režim náhľadu"><button type="button" class="mode active" data-mode="desktop" aria-pressed="true">Desktop</button><button type="button" class="mode" data-mode="mobile" aria-pressed="false">Mobil</button></div></div><div class="preview-wrap"><section class="stage" id="stage" aria-label="Interaktívna mapa tímu" tabindex="0"><div class="cloud" id="cloud"></div></section></div><p class="scroll-tip" id="scrollTip">Posúvaj obsah horizontálne ← → · hlavy sa automaticky pohybujú horizontálne</p><div class="settings"><label class="setting">Počet <input id="count" type="range" min="24" max="120" value="84"><output id="countValue"></output></label><label class="setting">Offset <input id="offset" type="range" min="0" max="150" value="78"><output id="offsetValue"></output></label><label class="setting">Pohyb <input id="motion" type="range" min="0" max="100" step="5" value="20"><output id="motionValue">20%</output></label><button id="shuffle" type="button">Premiešať rozloženie ↻</button></div><p class="foot">Desktop aj mobil: nekonečný horizontálny pohyb · Mobil: manuálny horizontálny scroll</p></main><script>
 const stage=document.querySelector('#stage'),cloud=document.querySelector('#cloud'),shell=document.querySelector('.shell');const count=document.querySelector('#count'),offset=document.querySelector('#offset');const names=['Alex Novák','Sofia Kováčová','Martin Polák','Emma Horváthová','Oliver Urban','Nina Králová','Adam Benko','Laura Šimková','Jakub Varga','Mia Balážová','Tomáš Kováč','Ema Farkašová'];const roles=['Product Designer','UX Researcher','Design Lead','Frontend Developer','Strategist','Art Director'];const tones=['#a9a9a9','#b5b5b5','#c1c1c1','#999999','#adadad','#c9c9c9','#a3a3a3'];let seed=17,lastWidth=0,lastHeight=0;const motion=document.querySelector('#motion');let autoScrollFrame=0,lastTick=0,scrollPauseUntil=0,desktopTravel=0,desktopItems=[];function random(i,s){const v=Math.sin(i*127.1+s*311.7)*43758.5453;return v-Math.floor(v)}function draw(){
  const w=cloud.clientWidth,h=cloud.clientHeight;if(!w||!h)return;
@@ -110,16 +121,79 @@ function autoScroll(t){
   for(const item of desktopItems){
    // Wrap each head independently, instead of waiting for an entire tile.
    const x=((item.x+travel)%w+w)%w;
+   // Original size at center; up to 25% smaller near edges, updated during movement.
+   const viewportCenter=stage.scrollLeft+stage.clientWidth/2;
+   const centerX=x+item.d/2;
+   const distance=Math.abs(centerX-viewportCenter);
+   const influence=Math.max(0,1-distance/(stage.clientWidth*.58));
+   const centerScale=0.75+0.25*influence*influence;
+   const clearance=Math.ceil(item.d*(1.65*centerScale-1)/2+7);
+   item.el.style.setProperty('--center-scale',centerScale.toFixed(4));
+   item.el.style.setProperty('--label-clearance',clearance+'px');
    item.el.style.setProperty('--x',x+'px');
    for(const copy of item.copies){
-    copy.el.style.setProperty('--x',(x+copy.direction*w)+'px');
+    const copyX=x+copy.direction*w;
+    const copyDistance=Math.abs(copyX+item.d/2-viewportCenter);
+    const copyInfluence=Math.max(0,1-copyDistance/(stage.clientWidth*.58));
+    const copyScale=0.75+0.25*copyInfluence*copyInfluence;
+    copy.el.style.setProperty('--center-scale',copyScale.toFixed(4));
+    copy.el.style.setProperty('--label-clearance',Math.ceil(item.d*(1.65*copyScale-1)/2+7)+'px');
+    copy.el.style.setProperty('--x',copyX+'px');
    }
   }
  }
  autoScrollFrame=requestAnimationFrame(autoScroll);
 }
+// Mobile touch: horizontal drag with inertia and gradual damping.
+// A vertical gesture is left to the browser to scroll the page normally.
+let drag=null, glideFrame=0, blockClickUntil=0;
+function stopGlide(){if(glideFrame){cancelAnimationFrame(glideFrame);glideFrame=0;}}
+function startGlide(velocity){
+ stopGlide();let previous=performance.now();
+ const step=now=>{
+  const dt=Math.min(40,now-previous);previous=now;
+  const before=stage.scrollLeft;
+  stage.scrollLeft+=velocity*dt;
+  velocity*=Math.exp(-dt/340); // damping: ~340ms decay time
+  if(Math.abs(velocity)>.012 && stage.scrollLeft!==before)glideFrame=requestAnimationFrame(step);
+  else glideFrame=0;
+ };
+ if(Math.abs(velocity)>.012)glideFrame=requestAnimationFrame(step);
+}
+stage.addEventListener('touchstart',e=>{
+ if(!shell.classList.contains('mobile-preview')||e.touches.length!==1)return;
+ stopGlide();const t=e.touches[0];
+ drag={x:t.clientX,y:t.clientY,lastX:t.clientX,lastT:performance.now(),velocity:0,axis:null,moved:false};
+},{passive:true});
+stage.addEventListener('touchmove',e=>{
+ if(!drag||!shell.classList.contains('mobile-preview')||e.touches.length!==1)return;
+ const t=e.touches[0],dx=t.clientX-drag.x,dy=t.clientY-drag.y;
+ if(!drag.axis && Math.hypot(dx,dy)>7)drag.axis=Math.abs(dx)>Math.abs(dy)*1.1?'x':'y';
+ if(drag.axis!=='x')return;
+ e.preventDefault();drag.moved=true;
+ const now=performance.now(),dt=Math.max(1,now-drag.lastT);
+ const delta=t.clientX-drag.lastX;
+ stage.scrollLeft-=delta;
+ const instant=-delta/dt;
+ drag.velocity=drag.velocity*.55+instant*.45;
+ drag.lastX=t.clientX;drag.lastT=now;
+},{passive:false});
+function finishDrag(){
+ if(!drag)return;
+ if(drag.moved){blockClickUntil=performance.now()+400;startGlide(drag.velocity*.9);}
+ drag=null;
+}
+stage.addEventListener('touchend',finishDrag,{passive:true});
+stage.addEventListener('touchcancel',()=>{drag=null;stopGlide();},{passive:true});
+stage.addEventListener('click',e=>{
+ if(performance.now()<blockClickUntil){e.preventDefault();e.stopImmediatePropagation();}
+},true);
 // Manual scrolling never stops the ambient horizontal drift.
 
 motion.addEventListener('input',applyMotion);applyMotion();requestAnimationFrame(autoScroll);
-[count,offset].forEach(x=>x.addEventListener('input',draw));document.querySelector('#shuffle').addEventListener('click',()=>{seed++;draw()});new ResizeObserver(()=>{const w=cloud.clientWidth,h=cloud.clientHeight;if(w!==lastWidth||h!==lastHeight){lastWidth=w;lastHeight=h;draw()}}).observe(stage);document.querySelectorAll('.mode').forEach(btn=>btn.addEventListener('click',()=>{const mobile=btn.dataset.mode==='mobile';shell.classList.toggle('mobile-preview',mobile);document.querySelectorAll('.mode').forEach(b=>{const active=b===btn;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});if(mobile){stage.scrollLeft=0;stage.scrollTop=0;}requestAnimationFrame(draw);}));draw();
+[count,offset].forEach(x=>x.addEventListener('input',draw));document.querySelector('#shuffle').addEventListener('click',()=>{seed++;draw()});new ResizeObserver(()=>{const w=cloud.clientWidth,h=cloud.clientHeight;if(w!==lastWidth||h!==lastHeight){lastWidth=w;lastHeight=h;draw()}}).observe(stage);document.querySelectorAll('.mode').forEach(btn=>btn.addEventListener('click',()=>{const mobile=btn.dataset.mode==='mobile';shell.classList.toggle('mobile-preview',mobile);document.querySelectorAll('.mode').forEach(b=>{const active=b===btn;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});if(mobile){stage.scrollLeft=0;stage.scrollTop=0;}requestAnimationFrame(draw);}));
+if(window.matchMedia('(max-width:650px)').matches){
+ const mobileButton=document.querySelector('.mode[data-mode="mobile"]');
+ if(mobileButton)mobileButton.click();
+}else{draw();}
 </script></body></html>
